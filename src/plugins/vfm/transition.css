@@ -1,0 +1,10 @@
+.bottom-enter-active,
+.bottom-leave-active {
+    transform: translateY(0);
+    transition: transform 0.2s ease-in;
+}
+.bottom-enter-from,
+.bottom-leave-to {
+    transform: translateY(100%);
+    transition: transform 0.1s ease-out;
+}
