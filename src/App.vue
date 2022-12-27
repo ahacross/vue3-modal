@@ -11,6 +11,7 @@
   <button @click="onAlert">alert</button>
   <button @click="onConfirm">confirm</button>
   <button @click="onModal">modal</button>
+  <button @click="onModal2">modal2</button>
 
   <modals-container />
 </template>
@@ -18,6 +19,7 @@
 <script>
 import { ModalsContainer } from 'vue-final-modal'
 import modalExample from '@/plugins/vfm/modalExample.vue'
+import modalExample2 from '@/plugins/vfm/modalExample2.vue'
 export default {
   name: 'App',
   components: { ModalsContainer },
@@ -40,6 +42,17 @@ export default {
       const result = await this.$modal(modalExample, {
         title: '제목입니다.',
         buttons: [{ text: '적용' }],
+        props: {
+          kakao: 'kakao213',
+          naver: 'naver909'
+        }
+      })
+      console.log(result)
+    },
+    async onModal2() {
+      const result = await this.$modal(modalExample2, {
+        title: '제목입니다.',
+        buttons: [{ text: '적용2', func: 'setValue' }],
         props: {
           kakao: 'kakao213',
           naver: 'naver909'

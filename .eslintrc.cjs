@@ -3,7 +3,7 @@ require('@rushstack/eslint-patch/modern-module-resolution')
 
 module.exports = {
   root: true,
-  'extends': [
+  extends: [
     'plugin:vue/vue3-essential',
     'eslint:recommended',
     '@vue/eslint-config-prettier'
@@ -33,6 +33,6 @@ module.exports = {
     'comma-spacing': ['error', { before: false, after: true }],
     'dot-location': ['error', 'property'],
     'keyword-spacing': 'error',
-    eqeqeq: ['error', 'always'],
+    eqeqeq: ['error', 'always']
   }
 }

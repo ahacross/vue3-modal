@@ -16,7 +16,7 @@
           v-for="(btn, idx) in params.buttons"
           :key="idx"
           style="margin-right: 10px"
-          @click="onClose(close, btn.isClose)">
+          @click="onClose({ close, ...btn })">
           {{ btn.text }}
         </button>
       </div>
@@ -35,8 +35,14 @@ export default {
     }
   },
   methods: {
-    onClose(close, isClose) {
-      const value = isClose ? false : this.slotVnode.returnValue
+    onClose({ close, func, isClose }) {
+      const vNode = this.slotVnode
+
+      if (func) {
+        vNode[func]()
+      }
+
+      const value = isClose ? false : vNode.returnValue
       this.$emit('cancel', { close, value })
     }
   }
