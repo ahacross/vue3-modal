@@ -17,7 +17,7 @@
           v-for="(btn, idx) in params.buttons"
           :key="idx"
           style="margin-right: 10px"
-          @click="onClose(close, btn.isClose)">
+          @click="onClose({ close, ...btn })">
           {{ btn.text }}
         </button>
       </div>
