@@ -5,11 +5,12 @@
     content-class="modal-content"
     transition="bottom">
     <template v-slot="{ params, close }">
+      {{ setClose(close) }}
       <span v-if="params.title" class="modal__title">
         {{ params.title }}
       </span>
       <div class="modal__content">
-        <slot :params="params"></slot>
+        <slot :params="params" />
       </div>
       <div class="modal__action">
         <button
@@ -31,13 +32,15 @@ export default {
   emits: ['cancel'],
   data() {
     return {
-      slotVnode: null
+      close: null
     }
   },
   methods: {
-    onClose(close, isClose) {
-      const value = isClose ? false : this.slotVnode.returnValue
-      this.$emit('cancel', { close, value })
+    setClose(close) {
+      this.close = close
+    },
+    modalClose(value = null) {
+      this.$emit('cancel', { close: this.close, value })
     }
   }
 }
@@ -114,5 +117,13 @@ export default {
 .dark-mode div:deep(.modal-content) {
   border-color: #2d3748;
   background-color: #1a202c;
+}
+:deep(.fullscreen) {
+  width: 100vw;
+  height: 100vh;
+  margin: 0;
+  max-height: none;
+  background: white;
+  padding: 10px;
 }
 </style>

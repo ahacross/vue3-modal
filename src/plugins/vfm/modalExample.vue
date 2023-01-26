@@ -25,9 +25,6 @@ export default {
       list: new Array(10).fill().map((n, i) => i)
     }
   },
-  mounted() {
-    // 이런 식으로 returnValue만 넣어주면 끝.
-    this.setReturnValue('test123123')
-  }
+  mounted() {}
 }
 </script>

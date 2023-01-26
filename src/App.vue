@@ -37,14 +37,18 @@ export default {
       console.log(result)
     },
     async onModal() {
-      const result = await this.$modal(modalExample, {
-        title: '제목입니다.',
-        buttons: [{ text: '적용' }],
-        props: {
-          kakao: 'kakao213',
-          naver: 'naver909'
-        }
-      })
+      const result = await this.$modal(
+        modalExample,
+        {
+          title: '제목입니다.',
+          buttons: [{ text: '적용' }],
+          props: {
+            kakao: 'kakao213',
+            naver: 'naver909'
+          }
+        },
+        { 'content-class': 'fullscreen' }
+      )
       console.log(result)
     }
   }

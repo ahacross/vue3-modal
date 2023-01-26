@@ -101,7 +101,7 @@ export default {
   width: 18px;
   height: 18px;
 }
-.dark-mode div::v-deep .modal-content {
+.dark-mode :deep(div) .modal-content {
   border-color: #2d3748;
   background-color: #1a202c;
 }
