@@ -46,7 +46,7 @@ export default {
 }
 </script>
 
-<style scoped>
+<style scoped lang="scss">
 :deep(.modal-container) {
   display: flex;
   justify-content: center;
@@ -69,6 +69,11 @@ export default {
   font-size: 1.5rem;
   font-weight: 700;
 }
+
+:deep(.fullscreen) .modal__content {
+  height: 100vh;
+}
+
 .modal__content {
   flex-grow: 1;
   overflow-y: auto;
