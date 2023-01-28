@@ -1,6 +1,6 @@
 export default {
   methods: {
-    modalClose(value) {
+    $modalClose(value) {
       this.$vfm.getTopModal()?.modalClose(value)
     }
   }

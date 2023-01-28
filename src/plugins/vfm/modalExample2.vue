@@ -1,5 +1,6 @@
 <template>
   <label><input type="checkbox" v-model="form.agree" /></label>
+  <button @click="onClose">닫기</button>
 </template>
 
 <script>
@@ -25,13 +26,10 @@ export default {
       }
     }
   },
-  mounted() {
-    // 이런 식으로 returnValue만 넣어주면 끝.
-    // this.setReturnValue('test123123')
-  },
+  // 이런 식으로 팝업을 닫고 싶을 때 this.$modalClose(value) 호출
   methods: {
-    setValue() {
-      this.setReturnValue(this.form)
+    onClose() {
+      this.$modalClose(this.form)
     }
   }
 }

@@ -2,6 +2,7 @@
   <div v-for="(item, idx) in list" :key="idx">
     {{ `무어라 해야 할까? ${item}` }}
   </div>
+  <button @click="onClose">닫기</button>
 </template>
 
 <script>
@@ -25,6 +26,10 @@ export default {
       list: new Array(10).fill().map((n, i) => i)
     }
   },
-  mounted() {}
+  methods: {
+    onClose() {
+      this.$modalClose(this.form)
+    }
+  }
 }
 </script>
