@@ -12,15 +12,6 @@
       <div class="modal__content">
         <slot :params="params" />
       </div>
-      <div class="modal__action">
-        <button
-          v-for="(btn, idx) in params.buttons"
-          :key="idx"
-          style="margin-right: 10px"
-          @click="onClose({ close, ...btn })">
-          {{ btn.text }}
-        </button>
-      </div>
     </template>
   </vue-final-modal>
 </template>
@@ -34,6 +25,9 @@ export default {
     return {
       close: null
     }
+  },
+  mounted() {
+    this.$vfm.modalArray.push(this)
   },
   methods: {
     setClose(close) {

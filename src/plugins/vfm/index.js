@@ -5,6 +5,12 @@ import './transition.css'
 export default {
   install(app) {
     const $vfm = app.config.globalProperties.$vfm
+
+    $vfm.modalArray = []
+    $vfm.getTopModal = () => {
+      return $vfm.modalArray.pop()
+    }
+
     app.config.globalProperties.$alert = (params, bind) => {
       return new Promise(resolve => {
         $vfm.show(getParams({ resolve, params, bind }))
