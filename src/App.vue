@@ -1,5 +1,5 @@
 <template>
-  <header>
+  <header v-page-visibility="pageParam">
     <img
       alt="Vue logo"
       class="logo"
@@ -12,6 +12,7 @@
   <button @click="onConfirm">confirm</button>
   <button @click="onModal">modal</button>
   <button @click="onModal2">modal2</button>
+  <router-view />
 
   <modals-container />
 </template>
@@ -23,6 +24,14 @@ import modalExample2 from '@/plugins/vfm/modalExample2.vue'
 export default {
   name: 'App',
   components: { ModalsContainer },
+  data() {
+    return {
+      pageParam: {
+        destroy: () => console.log('껐당'),
+        init: () => console.log('켰당')
+      }
+    }
+  },
   methods: {
     async onAlert() {
       const result = await this.$alert({
