@@ -1,5 +1,5 @@
 <template>
-  <header v-page-visibility="pageParam">
+  <header v-page-visibility="pageParams">
     <img
       alt="Vue logo"
       class="logo"
@@ -8,7 +8,9 @@
       height="125" />
   </header>
 
-  <button @click="onAlert">alert</button>
+  <button v-intersection-observer="intersectionParams" @click="onAlert">
+    alert
+  </button>
   <button @click="onConfirm">confirm</button>
   <button @click="onModal">modal</button>
   <button @click="onModal2">modal2</button>
@@ -26,9 +28,13 @@ export default {
   components: { ModalsContainer },
   data() {
     return {
-      pageParam: {
+      pageParams: {
         destroy: () => console.log('껐당'),
         init: () => console.log('켰당')
+      },
+      intersectionParams: {
+        destroy: () => console.log('안보인당'),
+        init: () => console.log('보인당')
       }
     }
   },

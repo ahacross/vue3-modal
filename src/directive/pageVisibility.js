@@ -13,6 +13,7 @@ function handleVisibilityChange() {
 export default {
   // called right before the element is inserted into the DOM.
   mounted(el, binding) {
+    console.log(binding)
     document.addEventListener(
       'visibilitychange',
       handleVisibilityChange.bind(binding.value),
