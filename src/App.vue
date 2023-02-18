@@ -14,6 +14,9 @@
   <button @click="onConfirm">confirm</button>
   <button @click="onModal">modal</button>
   <button @click="onModal2">modal2</button>
+
+  <div class="tempText">{{ text }}</div>
+  <makeTextPerLine target-class="tempText" :text="text" @lines="onLines" />
   <router-view />
 
   <modals-container />
@@ -23,9 +26,10 @@
 import { ModalsContainer } from 'vue-final-modal'
 import modalExample from '@/plugins/vfm/modalExample.vue'
 import modalExample2 from '@/plugins/vfm/modalExample2.vue'
+import makeTextPerLine from '@/components/makeTextPerLine.vue'
 export default {
   name: 'App',
-  components: { ModalsContainer },
+  components: { ModalsContainer, makeTextPerLine },
   data() {
     return {
       pageParams: {
@@ -35,7 +39,8 @@ export default {
       intersectionParams: {
         destroy: () => console.log('안보인당'),
         init: () => console.log('보인당')
-      }
+      },
+      text: '먼저 두 개의 직사각형을 그린 간단한 예제를 보도록하겠습니다. 그 중 하나는 투명도(alpha transparency)를가집니다. 나중에 이 예제가 어떻게 작동하는지 자세히 살펴 보겠습니다. 먼저 두 개의 직사각형을 그린 간단한 예제를 보도록하겠습니다. 그 중 하나는 투명도(alpha transparency)를가집니다. 나중에 이 예제가 어떻게 작동하는지 자세히 살펴 보겠습니다. 먼저 두 개의 직사각형을 그린 간단한 예제를 보도록하겠습니다. 그 중 하나는 투명도(alpha transparency)를가집니다. 나중에 이 예제가 어떻게 작동하는지 자세히 살펴 보겠습니다.'
     }
   },
   methods: {
@@ -78,12 +83,20 @@ export default {
         }
       })
       console.log(result)
+    },
+    onLines(lines) {
+      console.log('lines', lines)
     }
   }
 }
 </script>
 
-<style scoped>
+<style>
+.tempText {
+  width: 100vw;
+  height: 100px;
+  overflow: hidden;
+}
 header {
   line-height: 1.5;
   max-height: 100vh;
