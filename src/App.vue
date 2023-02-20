@@ -15,9 +15,8 @@
   <button @click="onModal">modal</button>
   <button @click="onModal2">modal2</button>
 
-  <div class="tempText">{{ text }}</div>
+  <div class="tempText" v-html="text" />
   <makeTextPerLine target-class="tempText" :text="text" @lines="onLines" />
-  <router-view />
 
   <modals-container />
 </template>
@@ -40,7 +39,7 @@ export default {
         destroy: () => console.log('안보인당'),
         init: () => console.log('보인당')
       },
-      text: '먼저 두 개의 직사각형을 그린 간단한 예제를 보도록하겠습니다. 그 중 하나는 투명도(alpha transparency)를가집니다. 나중에 이 예제가 어떻게 작동하는지 자세히 살펴 보겠습니다. 먼저 두 개의 직사각형을 그린 간단한 예제를 보도록하겠습니다. 그 중 하나는 투명도(alpha transparency)를가집니다. 나중에 이 예제가 어떻게 작동하는지 자세히 살펴 보겠습니다. 먼저 두 개의 직사각형을 그린 간단한 예제를 보도록하겠습니다. 그 중 하나는 투명도(alpha transparency)를가집니다. 나중에 이 예제가 어떻게 작동하는지 자세히 살펴 보겠습니다.'
+      text: '먼저 두 개의 직사각형을 그린 간단한 예제를 보도록하겠습니다.<br> 그 중 하나는 투명도(alpha transparency)를가집니다. <br /> 나중에 이 예제가 어떻게 작동하는지 자세히 살펴 보겠습니다. 먼저 두 개의 직사각형을 그린 간단한 예제를 보도록하겠습니다. 그 중 하나는 투명도(alpha transparency)를가집니다. 나중에 이 예제가 어떻게 작동하는지 자세히 살펴 보겠습니다. 먼저 두 개의 직사각형을 그린 간단한 예제를 보도록하겠습니다.<br></br> 그 중 하나는 투명도(alpha transparency)를가집니다.\n 나중에 이 예제가 어떻게 작동하는지 자세히 살펴 보겠습니다.'
     }
   },
   methods: {
@@ -93,7 +92,7 @@ export default {
 
 <style>
 .tempText {
-  width: 100vw;
+  width: 80vw;
   height: 100px;
   overflow: hidden;
 }

@@ -20,7 +20,8 @@ export default {
       target: null,
       ctx: null,
       tempLine: '',
-      rangeArr: []
+      rangeArr: [],
+      left: 0
     }
   },
   mounted() {
@@ -33,34 +34,42 @@ export default {
   },
   methods: {
     setRange() {
-      const textNode = this.target.childNodes[0]
       const range = document.createRange()
-      range.setStart(textNode, 0)
-      range.setEnd(textNode, this.target.textContent.length)
+      range.selectNodeContents(this.target)
       getSelection().addRange(range)
-      this.rangeArr = range.getClientRects()
+
+      this.rangeArr = Array.from(range.getClientRects()).filter(
+        ({ width }) => width
+      )
       getSelection().removeAllRanges()
     },
     applyStyle() {
-      const { font, fontWeight } = getComputedStyle(this.target)
+      const { font, fontWeight, paddingLeft } = getComputedStyle(this.target)
       this.ctx.font = `${fontWeight} ${font}`
+      this.left = parseInt(paddingLeft) + 5
     },
     getWidth(text) {
       return this.ctx.measureText(text).width
     },
     makeLine() {
-      const charArr = this.text.split('')
+      const charArr = this.text
+        .split(/<\/?\s*br\s*\/?>|\n/)
+        .join('')
+        .split('')
       const lastIdx = charArr.length - 1
+      const left = this.left
       let tempStr = ''
       let tempWidth
       const lines = []
+      let tempMaxWidth = this.rangeArr[lines.length].width + left
 
       charArr.forEach((char, idx) => {
         tempWidth = this.getWidth(tempStr + char)
         try {
-          if (tempWidth > this.rangeArr[lines.length].width + 5) {
+          if (tempWidth > tempMaxWidth) {
             lines.push(tempStr)
             tempStr = char
+            tempMaxWidth = this.rangeArr[lines.length].width + left
           } else {
             tempStr += char
           }
