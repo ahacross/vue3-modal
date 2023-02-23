@@ -5,6 +5,7 @@
 <script>
 export default {
   name: 'makeTextPerLine',
+  emits: ['lines'],
   props: {
     targetClass: {
       type: String,
@@ -24,15 +25,24 @@ export default {
       left: 0
     }
   },
+  watch: {
+    text: {
+      immediate: true,
+      handler() {
+        this.$nextTick(this.init)
+      }
+    }
+  },
   mounted() {
     this.target = document.querySelector(`.${this.targetClass}`)
     this.ctx = this.$refs.tempCanvas.getContext('2d')
-
-    this.setRange()
-    this.applyStyle()
-    setTimeout(this.makeLine, 100)
   },
   methods: {
+    init() {
+      this.setRange()
+      this.applyStyle()
+      setTimeout(this.makeLine, 100)
+    },
     setRange() {
       const range = document.createRange()
       range.selectNodeContents(this.target)
@@ -44,9 +54,12 @@ export default {
       getSelection().removeAllRanges()
     },
     applyStyle() {
-      const { font, fontWeight, paddingLeft } = getComputedStyle(this.target)
-      this.ctx.font = `${fontWeight} ${font}`
-      this.left = parseInt(paddingLeft) + 5
+      requestAnimationFrame(() => {
+        const { font, fontWeight, paddingLeft } = getComputedStyle(this.target)
+        this.ctx.font = font
+        this.ctx.fontWeight = fontWeight
+        this.left = parseInt(paddingLeft)
+      })
     },
     getWidth(text) {
       return this.ctx.measureText(text).width
@@ -64,7 +77,7 @@ export default {
       let tempMaxWidth = this.rangeArr[lines.length].width + left
 
       charArr.forEach((char, idx) => {
-        tempWidth = this.getWidth(tempStr + char)
+        tempWidth = this.getWidth((tempStr + char).trim())
         try {
           if (tempWidth > tempMaxWidth) {
             lines.push(tempStr)
