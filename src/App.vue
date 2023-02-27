@@ -20,6 +20,7 @@
   <VRuntimeTemplate :template="compText" />
   <IconCommunity />
   <modals-container />
+  <router-view />
 </template>
 
 <script>
