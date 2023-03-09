@@ -14,6 +14,9 @@
   <button @click="onConfirm">confirm</button>
   <button @click="onModal">modal</button>
   <button @click="onModal2">modal2</button>
+  <button @click="onModalFull">full</button>
+  <button @click="onModalBottomSheet">bottomSheet</button>
+  <button @click="onLoading">로딩</button>
 
   <div class="tempText" v-html="text" />
   <makeTextPerLine target-class="tempText" :text="text" @lines="onLines" />
@@ -87,8 +90,19 @@ export default {
       })
       console.log(result)
     },
+    async onModalFull() {
+      const result = await this.$fullScreen(modalExample2)
+      console.log(result)
+    },
+    async onModalBottomSheet() {
+      const result = await this.$bottomSheet(modalExample2)
+      console.log(result)
+    },
     onLines(lines) {
       console.log('lines', lines)
+    },
+    onLoading() {
+      this.$loading()
     }
   }
 }

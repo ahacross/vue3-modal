@@ -1,4 +1,8 @@
-import { getParams, getParamsModal } from '@/plugins/vfm/hoc/vfmParams'
+import {
+  getParams,
+  getParamsLoading,
+  getParamsModal
+} from '@/plugins/vfm/hoc/vfmParams'
 // import { $vfm } from 'vue-final-modal'
 import './transition.css'
 
@@ -27,6 +31,47 @@ export default {
     app.config.globalProperties.$modal = (component, params, bind) => {
       return new Promise(resolve => {
         $vfm.show(getParamsModal({ component, resolve, params, bind }))
+      })
+    }
+
+    app.config.globalProperties.$fullScreen = (component, params, bind) => {
+      return new Promise(resolve => {
+        $vfm.show(
+          getParamsModal({
+            component,
+            resolve,
+            params,
+            bind: { ...bind, fullScreen: true }
+          })
+        )
+      })
+    }
+
+    app.config.globalProperties.$bottomSheet = (component, params, bind) => {
+      return new Promise(resolve => {
+        $vfm.show(
+          getParamsModal({
+            component,
+            resolve,
+            params,
+            bind: { ...bind, bottomSheet: true }
+          })
+        )
+      })
+    }
+
+    app.config.globalProperties.$loading = (params, bind) => {
+      return new Promise(resolve => {
+        $vfm.show(
+          getParamsLoading({
+            resolve,
+            params,
+            bind: {
+              ...bind,
+              clickToClose: false
+            }
+          })
+        )
       })
     }
   }

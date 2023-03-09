@@ -1,42 +1,9 @@
 import CustomModal from '@/plugins/vfm/hoc/CustomModal.vue'
 import CustomModalPopup from '@/plugins/vfm/hoc/CustomModalPopup.vue'
+import CustomModalLoading from '@/plugins/vfm/hoc/CustomModalLoading.vue'
 
 function getRandomName(prefix) {
   return `${prefix}-${Math.random().toString(36).slice(2, 7)}`
-}
-
-// component open 용 params
-export const getParamsModal = ({ resolve, component, params, bind }) => {
-  let result = null
-  const name = getRandomName('modal')
-  const buttons = [...params.buttons, { text: '닫기', isClose: true }]
-  return {
-    component: CustomModalPopup,
-    bind: {
-      name,
-      ...bind
-    },
-    on: {
-      // event by custom-modal
-      cancel({ close, value }) {
-        result = value
-        close()
-      },
-      closed() {
-        resolve(result ? result : false)
-      }
-    },
-    params: { ...params, buttons },
-    opened() {}, // $vfm.show 실행하면 opened에 resolve 되는 함수 있음. 그거 초기화 시키는 용도로 쓰임.
-    slots: {
-      default: {
-        component,
-        bind: {
-          ...params.props
-        }
-      }
-    }
-  }
 }
 
 // alert / confirm 용 params
@@ -71,6 +38,73 @@ export const getParams = ({ resolve, params, bind }) => {
       },
       closed() {
         resolve(!!result)
+      }
+    },
+    params,
+    opened() {} // $vfm.show 실행하면 opened에 resolve 되는 함수 있음. 그거 초기화 시키는 용도로 쓰임.
+  }
+}
+
+// component open 용 params
+export const getParamsModal = ({ resolve, component, params = {}, bind }) => {
+  let result = null
+  const name = getRandomName('modal')
+  const buttons = [...(params?.buttons || [])]
+
+  if (bind?.fullScreen) {
+    delete bind.fullScreen
+    bind['content-class'] = 'modal-content fullscreen'
+  }
+
+  if (bind?.bottomSheet) {
+    delete bind.bottomSheet
+    bind['classes'] = 'modal-container bottom-sheet'
+  }
+
+  return {
+    component: CustomModalPopup,
+    bind: {
+      name,
+      ...bind
+    },
+    on: {
+      // event by custom-modal
+      cancel({ close, value }) {
+        result = value
+        close()
+      },
+      closed() {
+        resolve(result ? result : false)
+      }
+    },
+    params: { ...params, buttons },
+    opened() {}, // $vfm.show 실행하면 opened에 resolve 되는 함수 있음. 그거 초기화 시키는 용도로 쓰임.
+    slots: {
+      default: {
+        component,
+        bind: {
+          ...params.props
+        }
+      }
+    }
+  }
+}
+
+export const getParamsLoading = ({ resolve, params = {}, bind }) => {
+  const name = getRandomName('loading')
+  return {
+    component: CustomModalLoading,
+    bind: {
+      name,
+      ...bind
+    },
+    on: {
+      // event by custom-modal
+      cancel({ close }) {
+        close()
+      },
+      closed() {
+        resolve()
       }
     },
     params,

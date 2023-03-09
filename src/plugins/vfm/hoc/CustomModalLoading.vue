@@ -2,15 +2,14 @@
   <vue-final-modal
     v-bind="$attrs"
     classes="modal-container"
-    content-class="modal-content"
-    transition="bottom">
-    <template v-slot="{ params, close }">
+    content-class="modal-content">
+    <template v-slot="{ close }">
       {{ setClose(close) }}
-      <span v-if="params.title" class="modal__title">
-        {{ params.title }}
-      </span>
-      <div v-if="$slots.default()" class="modal__content">
-        <slot :params="params" />
+      <div class="lds-ellipsis">
+        <div></div>
+        <div></div>
+        <div></div>
+        <div></div>
       </div>
     </template>
   </vue-final-modal>
@@ -18,7 +17,7 @@
 
 <script>
 export default {
-  name: 'CustomModalPopup',
+  name: 'CustomModalLoading',
   inheritAttrs: true,
   emits: ['cancel'],
   data() {
@@ -28,7 +27,6 @@ export default {
   },
   mounted() {
     this.$vfm.modalArray.push(this)
-    console.log(this.$slots)
   },
   methods: {
     setClose(close) {
@@ -54,9 +52,11 @@ export default {
   max-height: 90%;
   margin: 0 1rem;
   padding: 1rem;
-  border: 1px solid #e2e8f0;
-  border-radius: 0.25rem;
-  background: #fff;
+  //border: 1px solid #e2e8f0;
+  //border-radius: 0.25rem;
+  border: 0px;
+  //background: #fff;
+  background: transparent;
   text-align: left;
 }
 .modal__title {
@@ -125,5 +125,60 @@ export default {
   max-height: none;
   background: white;
   padding: 10px;
+}
+.lds-ellipsis {
+  display: inline-block;
+  position: relative;
+  width: 80px;
+  height: 80px;
+}
+.lds-ellipsis div {
+  position: absolute;
+  top: 33px;
+  width: 13px;
+  height: 13px;
+  border-radius: 50%;
+  background: #fff;
+  animation-timing-function: cubic-bezier(0, 1, 1, 0);
+}
+.lds-ellipsis div:nth-child(1) {
+  left: 8px;
+  animation: lds-ellipsis1 0.6s infinite;
+}
+.lds-ellipsis div:nth-child(2) {
+  left: 8px;
+  animation: lds-ellipsis2 0.6s infinite;
+}
+.lds-ellipsis div:nth-child(3) {
+  left: 32px;
+  animation: lds-ellipsis2 0.6s infinite;
+}
+.lds-ellipsis div:nth-child(4) {
+  left: 56px;
+  animation: lds-ellipsis3 0.6s infinite;
+}
+@keyframes lds-ellipsis1 {
+  0% {
+    transform: scale(0);
+  }
+  100% {
+    transform: scale(1);
+  }
+}
+@keyframes lds-ellipsis3 {
+  0% {
+    transform: scale(1);
+  }
+  100% {
+    transform: scale(0);
+  }
+}
+@keyframes lds-ellipsis2 {
+  0% {
+    transform: translate(0, 0);
+  }
+  100% {
+    transform: translate(24px, 0);
+  }
 }
 </style>
