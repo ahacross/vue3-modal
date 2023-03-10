@@ -69,6 +69,10 @@ export default {
   height: 100vh;
 }
 
+:deep(.bottom-sheet) .modal__content {
+  /* width: 100%; */
+}
+
 .modal__content {
   flex-grow: 1;
   overflow-y: auto;
@@ -125,5 +129,9 @@ export default {
   max-height: none;
   background: white;
   padding: 10px;
+}
+
+:deep(.bottom-sheet) {
+  align-items: end;
 }
 </style>
